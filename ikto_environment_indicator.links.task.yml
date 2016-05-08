@@ -1,0 +1,9 @@
+ikto_environment_indicator.settings.tab:
+  title: 'Settings'
+  route_name: ikto_environment_indicator.settings
+  base_route: ikto_environment_indicator.settings
+
+ikto_environment_indicator.collection.tab:
+  title: 'Environment Switcher'
+  route_name: entity.ikto_environment_indicator.collection
+  base_route: ikto_environment_indicator.settings

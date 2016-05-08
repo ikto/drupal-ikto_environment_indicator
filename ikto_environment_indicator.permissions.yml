@@ -1,0 +1,10 @@
+administer ikto environment indicator settings:
+  title: 'Administer environment_indicator settings'
+  description: 'Configure the environments and the colors to display.'
+
+access ikto environment indicator:
+  title: 'See environment indicator'
+  description: 'See all the environment indicators in the site.'
+
+permission_callbacks:
+  - Drupal\ikto_environment_indicator\EnvironmentIndicatorPermissions::permissions

@@ -1,0 +1,5 @@
+ikto_environment_switcher_create:
+  route_name: entity.ikto_environment_indicator.add
+  title: 'Add environment'
+  appears_on:
+    - entity.ikto_environment_indicator.collection
