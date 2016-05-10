@@ -28,6 +28,7 @@ class EnvironmentIndicatorListBuilder extends ConfigEntityListBuilder {
   public function buildHeader() {
     $row['name'] = $this->t('Environment name');
     $row['url'] = $this->t('Environment url');
+    $row['weight'] = $this->t('Weight');
     $row += parent::buildHeader();
 
     return $row;
@@ -47,6 +48,9 @@ class EnvironmentIndicatorListBuilder extends ConfigEntityListBuilder {
     ];
     $row['data']['url'] = [
       'data' => $entity->getUrl(),
+    ];
+    $row['data']['weight'] = [
+      'data' => $entity->getWeight(),
     ];
 
     $row['data'] += parent::buildRow($entity);

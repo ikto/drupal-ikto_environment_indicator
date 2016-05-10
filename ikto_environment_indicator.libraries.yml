@@ -1,0 +1,9 @@
+drupal.ikto_environment_indicator:
+  version: '3.0'
+  js:
+    js/ikto_environment_indicator.js: {}
+  css:
+    component:
+      css/ikto_environment_indicator.css: {}
+  dependencies:
+    - color/drupal.color

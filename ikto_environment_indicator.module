@@ -1,1 +1,96 @@
 <?php
+
+require_once __DIR__ . '/ikto_environment_indicator.inc';
+
+use Drupal\Core\Cache\Cache;
+
+/**
+ * Implements hook_toolbar().
+ */
+function ikto_environment_indicator_toolbar() {
+  $permission = \Drupal::currentUser()
+    ->hasPermission('access environment indicator');
+  $items['ikto_environment_indicator'] = [
+    // Include the toolbar_tab_wrapper to style the link like a toolbar tab.
+    // Exclude the theme wrapper if custom styling is desired.
+    '#type' => 'toolbar_item',
+    '#access' => $permission,
+    '#cache' => [
+      'tags' => Cache::mergeTags(
+        ['config:ikto_environment_indicator.settings'],
+        _ikto_environment_indicator_switcher_cache_tags()
+      ),
+    ],
+    '#weight' => 125,
+  ];
+
+  if (!_ikto_environment_indicator_toolbar_intergration_is_enabled()) {
+    return $items;
+  }
+
+  $active_environment = \Drupal::cache()->get('ikto_environment_indicator:active_environment');
+  if ($active_environment) {
+    $active_environment = $active_environment->data;
+  }
+  else {
+    $active_environment = [
+      'name' => NULL,
+      'fg_color' => NULL,
+      'bg_color' => NULL,
+    ];
+  }
+
+  $title = $active_environment['name'];
+  $git_info = _ikto_environment_indicator_get_git_info();
+  if (!empty($git_info)) {
+    $title .= ' (' . $git_info . ')';
+  }
+
+  $items['ikto_environment_indicator']['tab'] = [
+    '#type' => 'link',
+    '#access' => $permission,
+    '#title' => $title,
+    '#url' => \Drupal\Core\Url::fromRoute('ikto_environment_indicator.settings'),
+    '#options' => [
+      'attributes' => [
+        'title' => t('Environment'),
+        'class' => [
+          'toolbar-icon',
+          'toolbar-item',
+          'toolbar-icon-environment',
+        ],
+      ],
+    ],
+  ];
+
+  $items['ikto_environment_indicator']['tray'] = [
+    '#heading' => t('Environment ingo'),
+    '#wrapper_attributes' => [],
+    '#access' => $permission,
+    'configure' => [
+      '#type' => 'link',
+      '#title' => t('Configure'),
+      '#url' => \Drupal\Core\Url::fromRoute('ikto_environment_indicator.settings'),
+      '#weight' => 100,
+      '#options' => [
+        'attributes' => [
+          'title' => t('Environment switcher configuration'),
+          'class' => ['edit-environments'],
+        ],
+      ],
+    ],
+  ];
+
+  $items['ikto_environment_indicator']['#attached'] = [
+    'library' => ['ikto_environment_indicator/drupal.ikto_environment_indicator'],
+    'drupalSettings' => [
+      'iktoEnvironmentIndicator' => [
+        'name' => $active_environment['name'],
+        'fgColor' => $active_environment['fg_color'],
+        'bgColor' => $active_environment['bg_color'],
+      ],
+    ],
+  ];
+
+  return $items;
+}

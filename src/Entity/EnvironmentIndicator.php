@@ -80,6 +80,13 @@ class EnvironmentIndicator extends ConfigEntityBase implements ConfigEntityInter
    */
   public $bg_color;
 
+  /**
+   * The weight of the indicator.
+   *
+   * @var integer
+   */
+  public $weight;
+
 
   /**
    * {@inheritdoc}
@@ -120,6 +127,15 @@ class EnvironmentIndicator extends ConfigEntityBase implements ConfigEntityInter
    */
   public function getBgColor() {
     return $this->get('bg_color');
+  }
+
+  /**
+   * Gets the weight.
+   *
+   * @return integer
+   */
+  public function getWeight() {
+    return $this->get('weight');
   }
 
   /**
@@ -165,6 +181,15 @@ class EnvironmentIndicator extends ConfigEntityBase implements ConfigEntityInter
    */
   public function setBgColor($bg_color) {
     $this->set('bg_color', $bg_color);
+  }
+
+  /**
+   * Sets the weight.
+   *
+   * @param integer $weight
+   */
+  public function setWeight($weight) {
+    $this->set('weight', $weight);
   }
 
 }

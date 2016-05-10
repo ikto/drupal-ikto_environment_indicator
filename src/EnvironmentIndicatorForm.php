@@ -4,6 +4,7 @@ namespace Drupal\ikto_environment_indicator;
 
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\ikto_environment_indicator\Entity\EnvironmentIndicator;
 
 class EnvironmentIndicatorForm extends EntityForm {
 
@@ -11,7 +12,7 @@ class EnvironmentIndicatorForm extends EntityForm {
    * This actually builds your form.
    */
   public function form(array $form, FormStateInterface $form_state) {
-    /* @var \Drupal\ikto_environment_indicator\Entity\EnvironmentIndicator $environment_switcher */
+    /* @var EnvironmentIndicator $environment_switcher */
     $environment_switcher = $this->getEntity();
 
     $form['name'] = [
@@ -45,6 +46,11 @@ class EnvironmentIndicatorForm extends EntityForm {
       '#title' => t('Color'),
       '#description' => t('Color for the indicator. Ex: #D0D0D0.'),
       '#default_value' => $environment_switcher->getFgColor() ?: '#D0D0D0',
+    ];
+    $form['weight'] = [
+      '#type' => 'weight',
+      '#title' => t('Weight'),
+      '#default_value' => $environment_switcher->getWeight(),
     ];
 
     return $form;

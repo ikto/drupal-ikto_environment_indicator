@@ -22,6 +22,9 @@ ikto_environment_indicator.switcher.*:
     bg_color:
       type: string
       label: 'Background color'
+    weight:
+      type: integer
+      label: 'Weight'
 
 ikto_environment_indicator.settings:
   type: config_object
@@ -36,6 +39,3 @@ ikto_environment_indicator.settings:
       sequence:
         type: string
         label: 'Toolbar identifier'
-    favicon:
-      type: boolean
-      label: 'Show a colored favicon for environment'

@@ -41,12 +41,6 @@ class EnvironmentIndicatorSettingsForm extends ConfigFormBase implements FormInt
       '#description' => $this->t('Select the toolbars that you want to integrate with.'),
       '#default_value' => $config->get('toolbar_integration') ?: [],
     ];
-    $form['favicon'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Show favicon'),
-      '#description' => $this->t('If checked, a favicon will be added with the environment colors when the indicator is shown.'),
-      '#default_value' => $config->get('favicon') ?: FALSE,
-    ];
 
     return $form;
   }
@@ -63,7 +57,7 @@ class EnvironmentIndicatorSettingsForm extends ConfigFormBase implements FormInt
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $config = $this->config('ikto_environment_indicator.settings');
-    $properties = ['git', 'toolbar_integration', 'favicon'];
+    $properties = ['git', 'toolbar_integration'];
     array_walk($properties, function ($property) use ($config, $form_state) {
       $config->set($property, $form_state->getValue($property));
     });
