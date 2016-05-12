@@ -8,6 +8,11 @@ use Drupal\Core\Cache\Cache;
  * Implements hook_toolbar().
  */
 function ikto_environment_indicator_toolbar() {
+
+  if (!_ikto_environment_indicator_toolbar_intergration_is_enabled()) {
+    return array();
+  }
+
   $permission = \Drupal::currentUser()
     ->hasPermission('access environment indicator');
   $items['ikto_environment_indicator'] = [
@@ -23,10 +28,6 @@ function ikto_environment_indicator_toolbar() {
     ],
     '#weight' => 125,
   ];
-
-  if (!_ikto_environment_indicator_toolbar_intergration_is_enabled()) {
-    return $items;
-  }
 
   /**
    * @var \Drupal\ikto_environment_indicator\EnvironmentIndicatorActive $active_environment
