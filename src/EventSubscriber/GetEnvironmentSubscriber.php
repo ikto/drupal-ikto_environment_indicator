@@ -2,11 +2,10 @@
 
 namespace Drupal\ikto_environment_indicator\EventSubscriber;
 
-use Drupal\Core\Cache\Cache;
-use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\ikto_environment_indicator\Entity\EnvironmentIndicator;
+use Drupal\ikto_environment_indicator\EnvironmentIndicatorActive;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -24,43 +23,32 @@ class GetEnvironmentSubscriber implements EventSubscriberInterface {
   protected $em;
 
   /**
-   * @var CacheBackendInterface
+   * @var EnvironmentIndicatorActive
    */
-  protected $cache;
+  protected $ev;
 
-  public function __construct(ConfigFactoryInterface $config, EntityTypeManagerInterface $em, CacheBackendInterface $cache) {
+  public function __construct(
+    ConfigFactoryInterface $config,
+    EntityTypeManagerInterface $em,
+    EnvironmentIndicatorActive $ev
+  ) {
     $this->config = $config;
     $this->em = $em;
-    $this->cache = $cache;
+    $this->ev = $ev;
   }
 
   public function onKernelRequestEnvironment(GetResponseEvent $event) {
 
-    $cachedEnvironment = $this->cache->get('ikto_environment_indicator:active_environment');
-
-    if (!$cachedEnvironment) {
+    if (!$this->ev->getIsLoaded()) {
       $env = $this->getEnvironmentIndicatorForHost($event->getRequest()->getHttpHost());
 
       /**
        * @var EnvironmentIndicator $env
        */
       if ($env) {
-
-        $data = [
-          'name' => $env->label(),
-          'fg_color' => $env->getFgColor(),
-          'bg_color' => $env->getBgColor(),
-        ];
-
-        $this->cache->set(
-          'ikto_environment_indicator:active_environment',
-          $data,
-          Cache::PERMANENT,
-          Cache::mergeTags(
-            ['config:ikto_environment_indicator.settings'],
-            _ikto_environment_indicator_switcher_cache_tags()
-          )
-        );
+        $this->ev->setName($env->label());
+        $this->ev->setFgColor($env->getFgColor());
+        $this->ev->setBgColor($env->getBgColor());
       }
     }
   }

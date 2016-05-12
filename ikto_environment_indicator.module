@@ -28,19 +28,12 @@ function ikto_environment_indicator_toolbar() {
     return $items;
   }
 
-  $active_environment = \Drupal::cache()->get('ikto_environment_indicator:active_environment');
-  if ($active_environment) {
-    $active_environment = $active_environment->data;
-  }
-  else {
-    $active_environment = [
-      'name' => NULL,
-      'fg_color' => NULL,
-      'bg_color' => NULL,
-    ];
-  }
+  /**
+   * @var \Drupal\ikto_environment_indicator\EnvironmentIndicatorActive $active_environment
+   */
+  $active_environment = \Drupal::service('ikto_environment_indicator.environment_indicator_active');
 
-  $title = $active_environment['name'];
+  $title = $active_environment->getName();
   $git_info = _ikto_environment_indicator_get_git_info();
   if (!empty($git_info)) {
     $title .= ' (' . $git_info . ')';
@@ -85,9 +78,9 @@ function ikto_environment_indicator_toolbar() {
     'library' => ['ikto_environment_indicator/drupal.ikto_environment_indicator'],
     'drupalSettings' => [
       'iktoEnvironmentIndicator' => [
-        'name' => $active_environment['name'],
-        'fgColor' => $active_environment['fg_color'],
-        'bgColor' => $active_environment['bg_color'],
+        'name' => $active_environment->getName(),
+        'fgColor' => $active_environment->getFgColor(),
+        'bgColor' => $active_environment->getBgColor(),
       ],
     ],
   ];

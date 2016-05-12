@@ -1,6 +1,14 @@
 services:
+  ikto_environment_indicator.environment_indicator_active:
+    class: Drupal\ikto_environment_indicator\EnvironmentIndicatorActive
+    arguments: ['@cache.default']
+    class:
+      - ['init', []]
   ikto_environment_indicator.subscriber.get_environment:
     class: Drupal\ikto_environment_indicator\EventSubscriber\GetEnvironmentSubscriber
-    arguments: ['@config.factory', '@entity_type.manager', '@cache.default']
+    arguments:
+      - '@config.factory'
+      - '@entity_type.manager'
+      - '@ikto_environment_indicator.environment_indicator_active'
     tags:
       - { name: event_subscriber }
