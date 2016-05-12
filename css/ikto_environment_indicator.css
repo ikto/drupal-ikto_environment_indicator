@@ -17,3 +17,8 @@
 .toolbar .toolbar-tray-horizontal .edit-environments {
   float: right;
 }
+.toolbar .toolbar-tray .ikto-environment-indicator-description {
+  padding: 1em 1.3333em;
+  color: #565656;
+  display: inline-block;
+}

@@ -17,6 +17,11 @@ class EnvironmentIndicatorActive {
   /**
    * @var string
    */
+  protected $description;
+
+  /**
+   * @var string
+   */
   protected $fg_color;
 
   /**
@@ -46,6 +51,7 @@ class EnvironmentIndicatorActive {
 
     if ($active_environment && !empty($active_environment->data)) {
       $this->setName($active_environment->data['name']);
+      $this->setDescription($active_environment->data['description']);
       $this->setFgColor($active_environment->data['fg_color']);
       $this->setBgColor($active_environment->data['bg_color']);
       $this->is_loaded = TRUE;
@@ -58,6 +64,7 @@ class EnvironmentIndicatorActive {
   public function save() {
     $data = [
       'name' => $this->getName(),
+      'description' => $this->getDescription(),
       'fg_color' => $this->getFgColor(),
       'bg_color' => $this->getBgColor(),
     ];
@@ -87,6 +94,20 @@ class EnvironmentIndicatorActive {
    */
   public function setName($name) {
     $this->name = $name;
+  }
+
+  /**
+   * @return string
+   */
+  public function getDescription() {
+    return $this->description;
+  }
+
+  /**
+   * @param string $description
+   */
+  public function setDescription($description) {
+    $this->description = $description;
   }
 
   /**

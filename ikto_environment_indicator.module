@@ -72,6 +72,14 @@ function ikto_environment_indicator_toolbar() {
         ],
       ],
     ],
+    'description' => [
+      '#type' => 'html_tag',
+      '#tag' => 'span',
+      '#attributes' => [
+        'class' => 'ikto-environment-indicator-description',
+      ],
+      '#value' => $active_environment->getDescription(),
+    ],
   ];
 
   $items['ikto_environment_indicator']['#attached'] = [
