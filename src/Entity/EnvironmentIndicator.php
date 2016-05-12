@@ -60,6 +60,13 @@ class EnvironmentIndicator extends ConfigEntityBase implements ConfigEntityInter
   public $name;
 
   /**
+   * The description for the configurable.
+   *
+   * @var string
+   */
+  public $description;
+
+  /**
    * The URL to switch to.
    *
    * @var string
@@ -100,6 +107,15 @@ class EnvironmentIndicator extends ConfigEntityBase implements ConfigEntityInter
    */
   public function label($langcode = NULL) {
     return $this->get('name');
+  }
+
+  /**
+   * Gets the description for the configurable.
+   *
+   * @return string
+   */
+  public function getDescription() {
+    return $this->description;
   }
 
   /**
@@ -156,6 +172,14 @@ class EnvironmentIndicator extends ConfigEntityBase implements ConfigEntityInter
     $this->set('name', $name);
   }
 
+  /**
+   * Sets the description for the configurable.
+   *
+   * @param string $description
+   */
+  public function setDescription($description) {
+    $this->description = $description;
+  }
   /**
    * Sets the URL.
    *

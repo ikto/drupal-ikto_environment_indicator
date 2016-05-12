@@ -29,6 +29,12 @@ class EnvironmentIndicatorForm extends EntityForm {
       '#default_value' => $environment_switcher->id(),
       '#disabled' => !empty($environment_switcher->machine),
     ];
+    $form['description'] = [
+      '#type' => 'textfield',
+      '#title' => t('Description'),
+      '#default_value' => $environment_switcher->getDescription(),
+      '#required' => FALSE,
+    ];
     $form['url'] = [
       '#type' => 'url',
       '#title' => t('Hostname'),
