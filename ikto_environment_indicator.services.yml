@@ -5,7 +5,7 @@ services:
     class:
       - ['init', []]
   ikto_environment_indicator.subscriber.get_environment:
-    class: Drupal\ikto_environment_indicator\EventSubscriber\GetEnvironmentSubscriber
+    class: Drupal\ikto_environment_indicator\EventListener\GetEnvironmentSubscriber
     arguments:
       - '@config.factory'
       - '@entity_type.manager'

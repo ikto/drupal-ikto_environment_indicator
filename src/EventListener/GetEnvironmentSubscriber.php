@@ -1,8 +1,9 @@
 <?php
 
-namespace Drupal\ikto_environment_indicator\EventSubscriber;
+namespace Drupal\ikto_environment_indicator\EventListener;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\ikto_environment_indicator\Entity\EnvironmentIndicatorInterface;
 use Drupal\ikto_environment_indicator\EnvironmentIndicatorActive;
@@ -18,9 +19,9 @@ class GetEnvironmentSubscriber implements EventSubscriberInterface {
   protected $config;
 
   /**
-   * @var EntityTypeManagerInterface
+   * @var EntityStorageInterface
    */
-  protected $em;
+  protected $storage;
 
   /**
    * @var EnvironmentIndicatorActive
@@ -33,7 +34,7 @@ class GetEnvironmentSubscriber implements EventSubscriberInterface {
     EnvironmentIndicatorActive $ev
   ) {
     $this->config = $config;
-    $this->em = $em;
+    $this->storage = $em->getStorage('ikto_environment_indicator');
     $this->ev = $ev;
   }
 
@@ -56,11 +57,11 @@ class GetEnvironmentSubscriber implements EventSubscriberInterface {
   }
 
   protected function getEnvironmentIndicatorForHost($host) {
-    $envs = $this->em->getStorage('ikto_environment_indicator')->loadMultiple();
-    uasort($envs, array('Drupal\ikto_environment_indicator\Entity\EnvironmentIndicator', 'sort'));
+    $environments = $this->storage->loadMultiple();
+    uasort($environments, array('Drupal\ikto_environment_indicator\Entity\EnvironmentIndicator', 'sort'));
 
     $env = NULL;
-    foreach ($envs as $env) {
+    foreach ($environments as $env) {
       /**
        * @var EnvironmentIndicatorInterface $env
        */
