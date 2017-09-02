@@ -2,8 +2,6 @@
 
 require_once __DIR__ . '/ikto_environment_indicator.inc';
 
-use Drupal\Core\Cache\Cache;
-
 /**
  * Implements hook_toolbar().
  */
@@ -39,18 +37,16 @@ function ikto_environment_indicator_toolbar() {
   ];
 
   $items['ikto_environment_indicator']['tab'] = [
-    '#type' => 'link',
+    '#type' => 'html_tag',
+    '#tag' => 'span',
     '#access' => $permission,
-    '#title' => $activeEnvironment->getDisplayNameFull(),
-    '#url' => \Drupal\Core\Url::fromRoute('ikto_environment_indicator.settings'),
-    '#options' => [
-      'attributes' => [
-        'title' => t('Environment'),
-        'class' => [
-          'toolbar-icon',
-          'toolbar-item',
-          'toolbar-icon-environment',
-        ],
+    '#value' => $activeEnvironment->getDisplayNameFull(),
+    '#attributes' => [
+      'title' => t('Environment'),
+      'class' => [
+        'toolbar-icon',
+        'toolbar-item',
+        'toolbar-icon-environment',
       ],
     ],
   ];
