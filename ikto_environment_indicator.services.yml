@@ -12,3 +12,8 @@ services:
       - '@ikto_environment_indicator.environment_indicator_active'
     tags:
       - { name: event_subscriber }
+  ikto_environment_indicator.git_info:
+    class: Drupal\ikto_environment_indicator\GitInfoService
+    arguments:
+      - '@config.factory'
+      - '@cache.default'

@@ -40,7 +40,7 @@ function ikto_environment_indicator_toolbar() {
   ];
 
   $title = $active_environment->getName();
-  $git_info = _ikto_environment_indicator_get_git_info();
+  $git_info = \Drupal::service('ikto_environment_indicator.git_info')->getGitInfo();
   if (!empty($git_info)) {
     $title .= ' (' . $git_info . ')';
   }
