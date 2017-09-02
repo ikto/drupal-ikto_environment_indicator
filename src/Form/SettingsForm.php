@@ -11,7 +11,7 @@ use Drupal\Core\Form\FormInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 
-class EnvironmentIndicatorSettingsForm extends ConfigFormBase implements FormInterface {
+class SettingsForm extends ConfigFormBase implements FormInterface {
 
   /**
    * {@inheritdoc}

@@ -30,7 +30,7 @@ entity.ikto_environment_indicator.add:
 ikto_environment_indicator.settings:
   path: '/admin/config/development/ikto-environment-indicator'
   defaults:
-    _form: '\Drupal\ikto_environment_indicator\Form\EnvironmentIndicatorSettingsForm'
+    _form: '\Drupal\ikto_environment_indicator\Form\SettingsForm'
     _title: 'Environment Indicator Settings'
   requirements:
     _permission: 'administer ikto environment indicator settings'

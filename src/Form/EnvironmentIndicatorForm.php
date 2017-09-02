@@ -1,12 +1,12 @@
 <?php
 
-namespace Drupal\ikto_environment_indicator;
+namespace Drupal\ikto_environment_indicator\Form;
 
-use Drupal\Core\Entity\EntityForm;
+use Drupal\Core\Entity\EntityForm as EntityFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\ikto_environment_indicator\Entity\EnvironmentIndicatorInterface;
 
-class EnvironmentIndicatorForm extends EntityForm {
+class EnvironmentIndicatorForm extends EntityFormBase {
 
   /**
    * This actually builds your form.

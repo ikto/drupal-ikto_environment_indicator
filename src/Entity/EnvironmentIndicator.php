@@ -23,7 +23,7 @@ use Drupal\Core\Annotation\Translation;
  *     "access" = "Drupal\ikto_environment_indicator\EnvironmentIndicatorAccessControlHandler",
  *     "list_builder" = "Drupal\ikto_environment_indicator\EnvironmentIndicatorListBuilder",
  *     "form" = {
- *       "default" = "Drupal\ikto_environment_indicator\EnvironmentIndicatorForm",
+ *       "default" = "Drupal\ikto_environment_indicator\Form\EnvironmentIndicatorForm",
  *       "delete" = "Drupal\Core\Entity\EntityDeleteForm"
  *     }
  *   },
