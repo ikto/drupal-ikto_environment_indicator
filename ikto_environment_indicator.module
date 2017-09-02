@@ -62,32 +62,6 @@ function ikto_environment_indicator_toolbar() {
     ],
   ];
 
-  $items['ikto_environment_indicator']['tray'] = [
-    '#heading' => t('Environment ingo'),
-    '#wrapper_attributes' => [],
-    '#access' => $permission,
-    'configure' => [
-      '#type' => 'link',
-      '#title' => t('Configure'),
-      '#url' => \Drupal\Core\Url::fromRoute('ikto_environment_indicator.settings'),
-      '#weight' => 100,
-      '#options' => [
-        'attributes' => [
-          'title' => t('Environment switcher configuration'),
-          'class' => ['edit-environments'],
-        ],
-      ],
-    ],
-    'description' => [
-      '#type' => 'html_tag',
-      '#tag' => 'span',
-      '#attributes' => [
-        'class' => 'ikto-environment-indicator-description',
-      ],
-      '#value' => $active_environment->getDescription(),
-    ],
-  ];
-
   $items['ikto_environment_indicator']['#attached'] = [
     'library' => ['ikto_environment_indicator/drupal.ikto_environment_indicator'],
     'drupalSettings' => [
