@@ -4,7 +4,7 @@ namespace Drupal\ikto_environment_indicator\EventSubscriber;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\ikto_environment_indicator\Entity\EnvironmentIndicator;
+use Drupal\ikto_environment_indicator\Entity\EnvironmentIndicatorInterface;
 use Drupal\ikto_environment_indicator\EnvironmentIndicatorActive;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
@@ -43,7 +43,7 @@ class GetEnvironmentSubscriber implements EventSubscriberInterface {
       $env = $this->getEnvironmentIndicatorForHost($event->getRequest()->getHttpHost());
 
       /**
-       * @var EnvironmentIndicator $env
+       * @var EnvironmentIndicatorInterface $env
        */
       if ($env) {
         $this->ev->setName($env->label());
@@ -61,7 +61,7 @@ class GetEnvironmentSubscriber implements EventSubscriberInterface {
     $env = NULL;
     foreach ($envs as $env) {
       /**
-       * @var EnvironmentIndicator $env
+       * @var EnvironmentIndicatorInterface $env
        */
       $url = $env->getUrl();
       if (empty($url)) {
