@@ -31,10 +31,9 @@ function ikto_environment_indicator_toolbar() {
     '#type' => 'toolbar_item',
     '#access' => $permission,
     '#cache' => [
-      'tags' => Cache::mergeTags(
-        ['config:ikto_environment_indicator.settings'],
-        _ikto_environment_indicator_switcher_cache_tags()
-      ),
+      'tags'      => $activeEnvironment->getCacheTags(),
+      'contexts'  => $activeEnvironment->getCacheContexts(),
+      'max-age'   => $activeEnvironment->getCacheMaxAge(),
     ],
     '#weight' => 125,
   ];

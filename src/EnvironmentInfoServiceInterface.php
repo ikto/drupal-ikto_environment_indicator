@@ -2,9 +2,10 @@
 
 namespace Drupal\ikto_environment_indicator;
 
+use Drupal\Core\Cache\CacheableDependencyInterface;
 use Drupal\ikto_environment_indicator\Entity\EnvironmentIndicatorInterface;
 
-interface EnvironmentInfoServiceInterface {
+interface EnvironmentInfoServiceInterface extends CacheableDependencyInterface {
 
   /**
    * Gets the machine name of active environment.
@@ -19,6 +20,13 @@ interface EnvironmentInfoServiceInterface {
    * @return string
    */
   public function getDisplayName();
+
+  /**
+   * Gets full representation of human-readable name of active environment.
+   *
+   * @return string
+   */
+  public function getDisplayNameFull();
 
   /**
    * Gets the description of active environment.

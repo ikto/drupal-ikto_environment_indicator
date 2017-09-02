@@ -1,28 +1,5 @@
 <?php
 
-use Drupal\ikto_environment_indicator\Entity\EnvironmentIndicator;
-use Drupal\Core\Cache\Cache;
-
-/**
- * Get the cache tags for the environment indicator switcher.
- *
- * @return string[]
- *   The cache tags.
- */
-function _ikto_environment_indicator_switcher_cache_tags() {
-  /* @var EnvironmentIndicator[] $environment_entities */
-  if (!$environment_entities = EnvironmentIndicator::loadMultiple()) {
-    return [];
-  }
-
-  $cache_tags = [];
-  foreach ($environment_entities as $entity) {
-    $cache_tags = Cache::mergeTags($cache_tags, $entity->getCacheTags());
-  }
-
-  return $cache_tags;
-}
-
 /**
  * Helper function that checks if there is toolbar integration.
  *

@@ -4,6 +4,7 @@ services:
     arguments:
       - '@cache.default'
       - '@ikto_environment_indicator.git_info'
+      - '@entity_type.manager'
     class:
       - ['init', []]
   ikto_environment_indicator.subscriber.get_environment:

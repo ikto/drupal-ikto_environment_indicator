@@ -4,6 +4,8 @@ namespace Drupal\ikto_environment_indicator;
 
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Cache\CacheBackendInterface;
+use Drupal\Core\Entity\EntityStorageInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\ikto_environment_indicator\Entity\EnvironmentIndicatorInterface;
 
 class EnvironmentInfoService implements EnvironmentInfoServiceInterface {
@@ -62,9 +64,19 @@ class EnvironmentInfoService implements EnvironmentInfoServiceInterface {
    */
   protected $gitInfo;
 
-  public function __construct(CacheBackendInterface $cache, GitInfoServiceInterface $gitInfo) {
+  /**
+   * @var EntityStorageInterface
+   */
+  protected $storage;
+
+  public function __construct(
+    CacheBackendInterface $cache,
+    GitInfoServiceInterface $gitInfo,
+    EntityTypeManagerInterface $entityTypeManager
+  ) {
     $this->cache = $cache;
     $this->gitInfo = $gitInfo;
+    $this->storage = $entityTypeManager->getStorage('ikto_environment_indicator');
   }
 
   /**
@@ -98,11 +110,8 @@ class EnvironmentInfoService implements EnvironmentInfoServiceInterface {
     $this->cache->set(
       self::CACHE_KEY,
       $data,
-      Cache::PERMANENT,
-      Cache::mergeTags(
-        ['config:ikto_environment_indicator.settings'],
-        _ikto_environment_indicator_switcher_cache_tags()
-      )
+      $this->getCacheMaxAge(),
+      $this->getCacheTags()
     );
   }
 
@@ -121,9 +130,7 @@ class EnvironmentInfoService implements EnvironmentInfoServiceInterface {
   }
 
   /**
-   * Gets full representation of human-readable name of active environment.
-   *
-   * @return string
+   * {@inheritdoc}
    */
   public function getDisplayNameFull() {
     $displayNameFull = $this->displayName;
@@ -174,5 +181,33 @@ class EnvironmentInfoService implements EnvironmentInfoServiceInterface {
     $this->fgColor      = $env->getFgColor();
     $this->bgColor      = $env->getBgColor();
     $this->isLoaded     = TRUE;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheContexts() {
+    return [];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheTags() {
+    $cacheTags = ['config:ikto_environment_indicator.settings'];
+
+    $environments = $this->storage->loadMultiple();
+    foreach ($environments as $entity) {
+      $cacheTags = Cache::mergeTags($cacheTags, $entity->getCacheTags());
+    }
+
+    return $cacheTags;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheMaxAge() {
+    return Cache::PERMANENT;
   }
 }
