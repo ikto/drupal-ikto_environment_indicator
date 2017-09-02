@@ -14,15 +14,15 @@ function ikto_environment_indicator_toolbar() {
   }
 
   /**
-   * @var \Drupal\ikto_environment_indicator\EnvironmentIndicatorActive $active_environment
+   * @var \Drupal\ikto_environment_indicator\EnvironmentInfoServiceInterface $activeEnvironment
    */
-  $active_environment = \Drupal::service('ikto_environment_indicator.environment_indicator_active');
+  $activeEnvironment = \Drupal::service('ikto_environment_indicator.active_environment_info');
 
   $permission = \Drupal::currentUser()
     ->hasPermission('access ikto environment indicator');
   if (!$permission) {
     $permission = \Drupal::currentUser()
-      ->hasPermission('access ikto environment indicator ' . $active_environment->getId());
+      ->hasPermission('access ikto environment indicator ' . $activeEnvironment->getMachineName());
   }
 
   $items['ikto_environment_indicator'] = [
@@ -39,16 +39,10 @@ function ikto_environment_indicator_toolbar() {
     '#weight' => 125,
   ];
 
-  $title = $active_environment->getName();
-  $git_info = \Drupal::service('ikto_environment_indicator.git_info')->getGitInfo();
-  if (!empty($git_info)) {
-    $title .= ' (' . $git_info . ')';
-  }
-
   $items['ikto_environment_indicator']['tab'] = [
     '#type' => 'link',
     '#access' => $permission,
-    '#title' => $title,
+    '#title' => $activeEnvironment->getDisplayNameFull(),
     '#url' => \Drupal\Core\Url::fromRoute('ikto_environment_indicator.settings'),
     '#options' => [
       'attributes' => [
@@ -66,9 +60,8 @@ function ikto_environment_indicator_toolbar() {
     'library' => ['ikto_environment_indicator/drupal.ikto_environment_indicator'],
     'drupalSettings' => [
       'iktoEnvironmentIndicator' => [
-        'name' => $active_environment->getName(),
-        'fgColor' => $active_environment->getFgColor(),
-        'bgColor' => $active_environment->getBgColor(),
+        'fgColor' => $activeEnvironment->getFgColor(),
+        'bgColor' => $activeEnvironment->getBgColor(),
       ],
     ],
   ];

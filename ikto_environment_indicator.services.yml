@@ -1,7 +1,9 @@
 services:
-  ikto_environment_indicator.environment_indicator_active:
-    class: Drupal\ikto_environment_indicator\EnvironmentIndicatorActive
-    arguments: ['@cache.default']
+  ikto_environment_indicator.active_environment_info:
+    class: Drupal\ikto_environment_indicator\EnvironmentInfoService
+    arguments:
+      - '@cache.default'
+      - '@ikto_environment_indicator.git_info'
     class:
       - ['init', []]
   ikto_environment_indicator.subscriber.get_environment:
@@ -9,7 +11,7 @@ services:
     arguments:
       - '@config.factory'
       - '@entity_type.manager'
-      - '@ikto_environment_indicator.environment_indicator_active'
+      - '@ikto_environment_indicator.active_environment_info'
     tags:
       - { name: event_subscriber }
   ikto_environment_indicator.git_info:
