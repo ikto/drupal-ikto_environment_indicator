@@ -10,26 +10,43 @@ class EnvironmentIndicatorActive {
   const CACHE_KEY = 'ikto_environment_indicator:active_environment';
 
   /**
+   * The machine name of the active environment.
+   *
+   * @var string
+   */
+  protected $id;
+
+  /**
+   * The human-readable name of the active environment.
+   *
    * @var string
    */
   protected $name;
 
   /**
+   * The description of the active environment.
+   *
    * @var string
    */
   protected $description;
 
   /**
+   * The foreground color of the active environment.
+   *
    * @var string
    */
   protected $fg_color;
 
   /**
+   * The background color of the active environment.
+   *
    * @var string
    */
   protected $bg_color;
 
   /**
+   * The flag which indicates whether active indicator was loaded or not.
+   *
    * @var boolean
    */
   protected $is_loaded = FALSE;
@@ -50,6 +67,7 @@ class EnvironmentIndicatorActive {
     $active_environment = $this->cache->get(self::CACHE_KEY);
 
     if ($active_environment && !empty($active_environment->data)) {
+      $this->setId($active_environment->data['id']);
       $this->setName($active_environment->data['name']);
       $this->setDescription($active_environment->data['description']);
       $this->setFgColor($active_environment->data['fg_color']);
@@ -63,6 +81,7 @@ class EnvironmentIndicatorActive {
    */
   public function save() {
     $data = [
+      'id' => $this->getId(),
       'name' => $this->getName(),
       'description' => $this->getDescription(),
       'fg_color' => $this->getFgColor(),
@@ -81,7 +100,26 @@ class EnvironmentIndicatorActive {
   }
 
   /**
-   * Gets the name of active environment.
+   * Gets the machine name of active environment.
+   *
+   * @return string
+   */
+  public function getId() {
+    return $this->id;
+  }
+
+  /**
+   * Gets the machine name of active environment.
+   *
+   * @param string $id
+   */
+  public function setId($id) {
+    $this->id = $id;
+  }
+
+  /**
+   * Gets the human-readable name of active environment.
+   *
    * @return string
    */
   public function getName() {
@@ -89,7 +127,8 @@ class EnvironmentIndicatorActive {
   }
 
   /**
-   * Sets the name of active environment.
+   * Sets the human-readable name of active environment.
+   *
    * @param string $name
    */
   public function setName($name) {
@@ -97,6 +136,8 @@ class EnvironmentIndicatorActive {
   }
 
   /**
+   * Gets the description of active environment.
+   *
    * @return string
    */
   public function getDescription() {
@@ -104,6 +145,8 @@ class EnvironmentIndicatorActive {
   }
 
   /**
+   * Gets the description of active environment.
+   *
    * @param string $description
    */
   public function setDescription($description) {
@@ -112,6 +155,7 @@ class EnvironmentIndicatorActive {
 
   /**
    * Gets the foreground color of active environment.
+   *
    * @return string
    */
   public function getFgColor() {
@@ -120,6 +164,7 @@ class EnvironmentIndicatorActive {
 
   /**
    * Sets the foreground color of active environment.
+   *
    * @param string $fg_color
    */
   public function setFgColor($fg_color) {
@@ -128,6 +173,7 @@ class EnvironmentIndicatorActive {
 
   /**
    * Gets the background color of active environment.
+   *
    * @return string
    */
   public function getBgColor() {
@@ -136,6 +182,7 @@ class EnvironmentIndicatorActive {
 
   /**
    * Sets the background color of active environment.
+   *
    * @param string $bg_color
    */
   public function setBgColor($bg_color) {
@@ -143,6 +190,8 @@ class EnvironmentIndicatorActive {
   }
 
   /**
+   * Indicates whether active environment was loaded or not.
+   *
    * @return boolean
    */
   public function getIsLoaded() {

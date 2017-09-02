@@ -46,6 +46,7 @@ class GetEnvironmentSubscriber implements EventSubscriberInterface {
        * @var EnvironmentIndicatorInterface $env
        */
       if ($env) {
+        $this->ev->setId($env->id());
         $this->ev->setName($env->label());
         $this->ev->setDescription($env->getDescription());
         $this->ev->setFgColor($env->getFgColor());

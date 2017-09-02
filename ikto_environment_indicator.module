@@ -13,8 +13,18 @@ function ikto_environment_indicator_toolbar() {
     return array();
   }
 
+  /**
+   * @var \Drupal\ikto_environment_indicator\EnvironmentIndicatorActive $active_environment
+   */
+  $active_environment = \Drupal::service('ikto_environment_indicator.environment_indicator_active');
+
   $permission = \Drupal::currentUser()
-    ->hasPermission('access environment indicator');
+    ->hasPermission('access ikto environment indicator');
+  if (!$permission) {
+    $permission = \Drupal::currentUser()
+      ->hasPermission('access ikto environment indicator ' . $active_environment->getId());
+  }
+
   $items['ikto_environment_indicator'] = [
     // Include the toolbar_tab_wrapper to style the link like a toolbar tab.
     // Exclude the theme wrapper if custom styling is desired.
@@ -28,11 +38,6 @@ function ikto_environment_indicator_toolbar() {
     ],
     '#weight' => 125,
   ];
-
-  /**
-   * @var \Drupal\ikto_environment_indicator\EnvironmentIndicatorActive $active_environment
-   */
-  $active_environment = \Drupal::service('ikto_environment_indicator.environment_indicator_active');
 
   $title = $active_environment->getName();
   $git_info = _ikto_environment_indicator_get_git_info();
