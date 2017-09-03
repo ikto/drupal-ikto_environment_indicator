@@ -2,10 +2,11 @@
 
 namespace Drupal\ikto_environment_indicator;
 
+use Drupal\Core\Access\AccessibleInterface;
 use Drupal\Core\Cache\CacheableDependencyInterface;
 use Drupal\ikto_environment_indicator\Entity\EnvironmentIndicatorInterface;
 
-interface EnvironmentInfoServiceInterface extends CacheableDependencyInterface {
+interface EnvironmentInfoServiceInterface extends CacheableDependencyInterface, AccessibleInterface {
 
   /**
    * Gets the machine name of active environment.

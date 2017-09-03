@@ -14,18 +14,13 @@ function ikto_environment_indicator_toolbar() {
    */
   $activeEnvironment = \Drupal::service('ikto_environment_indicator.active_environment_info');
 
-  $permission = \Drupal::currentUser()
-    ->hasPermission('access ikto environment indicator');
-  if (!$permission) {
-    $permission = \Drupal::currentUser()
-      ->hasPermission('access ikto environment indicator ' . $activeEnvironment->getMachineName());
-  }
+  $access = $activeEnvironment->access('view', \Drupal::currentUser());
 
   $items['ikto_environment_indicator'] = [
     // Include the toolbar_tab_wrapper to style the link like a toolbar tab.
     // Exclude the theme wrapper if custom styling is desired.
     '#type' => 'toolbar_item',
-    '#access' => $permission,
+    '#access' => $access,
     '#cache' => [
       'tags'      => $activeEnvironment->getCacheTags(),
       'contexts'  => $activeEnvironment->getCacheContexts(),
@@ -37,7 +32,7 @@ function ikto_environment_indicator_toolbar() {
   $items['ikto_environment_indicator']['tab'] = [
     '#type' => 'html_tag',
     '#tag' => 'span',
-    '#access' => $permission,
+    '#access' => $access,
     '#value' => $activeEnvironment->getDisplayNameFull(),
     '#attributes' => [
       'title' => t('Environment'),

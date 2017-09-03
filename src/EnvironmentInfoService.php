@@ -2,10 +2,13 @@
 
 namespace Drupal\ikto_environment_indicator;
 
+use Drupal\Core\Access\AccessResultAllowed;
+use Drupal\Core\Access\AccessResultForbidden;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\ikto_environment_indicator\Entity\EnvironmentIndicatorInterface;
 
 class EnvironmentInfoService implements EnvironmentInfoServiceInterface {
@@ -209,5 +212,36 @@ class EnvironmentInfoService implements EnvironmentInfoServiceInterface {
    */
   public function getCacheMaxAge() {
     return Cache::PERMANENT;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function access($operation, AccountInterface $account = NULL, $return_as_object = FALSE) {
+    if ($operation != 'view') {
+      if ($return_as_object) {
+        return new AccessResultForbidden();
+      }
+      else {
+        return FALSE;
+      }
+    }
+
+    $access = $account->hasPermission('access ikto environment indicator');
+
+    if (!$access) {
+      $access= $account->hasPermission('access ikto environment indicator ' . $this->getMachineName());
+    }
+
+    if ($return_as_object) {
+      if ($access) {
+        return new AccessResultAllowed();
+      }
+      else {
+        return new AccessResultForbidden();
+      }
+    }
+
+    return $access;
   }
 }
