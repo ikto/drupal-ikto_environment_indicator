@@ -23,7 +23,7 @@ use Drupal\Core\Annotation\Translation;
  *     "access" = "Drupal\ikto_environment_indicator\EnvironmentIndicatorAccessControlHandler",
  *     "list_builder" = "Drupal\ikto_environment_indicator\EnvironmentIndicatorListBuilder",
  *     "form" = {
- *       "default" = "Drupal\ikto_environment_indicator\EnvironmentIndicatorForm",
+ *       "default" = "Drupal\ikto_environment_indicator\Form\EnvironmentIndicatorForm",
  *       "delete" = "Drupal\Core\Entity\EntityDeleteForm"
  *     }
  *   },
@@ -43,7 +43,7 @@ use Drupal\Core\Annotation\Translation;
  *   }
  * )
  */
-class EnvironmentIndicator extends ConfigEntityBase implements ConfigEntityInterface {
+class EnvironmentIndicator extends ConfigEntityBase implements EnvironmentIndicatorInterface {
 
   /**
    * The machine-readable ID for the configurable.
@@ -105,50 +105,40 @@ class EnvironmentIndicator extends ConfigEntityBase implements ConfigEntityInter
   /**
    * {@inheritdoc}
    */
-  public function label($langcode = NULL) {
+  public function label() {
     return $this->get('name');
   }
 
   /**
-   * Gets the description for the configurable.
-   *
-   * @return string
+   * {@inheritdoc}
    */
   public function getDescription() {
     return $this->description;
   }
 
   /**
-   * Gets the URL.
-   *
-   * @return string
+   * {@inheritdoc}
    */
   public function getUrl() {
     return $this->get('url');
   }
 
   /**
-   * Gets the foreground color.
-   *
-   * @return string
+   * {@inheritdoc}
    */
   public function getFgColor() {
     return $this->get('fg_color');
   }
 
   /**
-   * Gets the background color.
-   *
-   * @return string
+   * {@inheritdoc}
    */
   public function getBgColor() {
     return $this->get('bg_color');
   }
 
   /**
-   * Gets the weight.
-   *
-   * @return integer
+   * {@inheritdoc}
    */
   public function getWeight() {
     return $this->get('weight');

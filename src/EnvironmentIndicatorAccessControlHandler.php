@@ -15,7 +15,7 @@ use Drupal\Core\Session\AccountInterface;
 /**
  * Defines an access controller for the environment entity.
  *
- * @see \Drupal\ikto_environment_indicator\Plugin\Core\Entity\EnvironmentIndicator.
+ * @see \Drupal\ikto_environment_indicator\Entity\EnvironmentIndicator.
  */
 class EnvironmentIndicatorAccessControlHandler extends EntityAccessControlHandler {
 

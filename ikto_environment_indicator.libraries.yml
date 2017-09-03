@@ -5,5 +5,3 @@ drupal.ikto_environment_indicator:
   css:
     component:
       css/ikto_environment_indicator.css: {}
-  dependencies:
-    - color/drupal.color

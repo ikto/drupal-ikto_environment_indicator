@@ -1,14 +1,22 @@
 services:
-  ikto_environment_indicator.environment_indicator_active:
-    class: Drupal\ikto_environment_indicator\EnvironmentIndicatorActive
-    arguments: ['@cache.default']
-    class:
+  ikto_environment_indicator.active_environment_info:
+    class: Drupal\ikto_environment_indicator\EnvironmentInfoService
+    arguments:
+      - '@cache.default'
+      - '@ikto_environment_indicator.git_info'
+      - '@entity_type.manager'
+    calls:
       - ['init', []]
   ikto_environment_indicator.subscriber.get_environment:
-    class: Drupal\ikto_environment_indicator\EventSubscriber\GetEnvironmentSubscriber
+    class: Drupal\ikto_environment_indicator\EventListener\GetEnvironmentSubscriber
     arguments:
       - '@config.factory'
       - '@entity_type.manager'
-      - '@ikto_environment_indicator.environment_indicator_active'
+      - '@ikto_environment_indicator.active_environment_info'
     tags:
       - { name: event_subscriber }
+  ikto_environment_indicator.git_info:
+    class: Drupal\ikto_environment_indicator\GitInfoService
+    arguments:
+      - '@config.factory'
+      - '@cache.default'

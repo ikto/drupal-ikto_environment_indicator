@@ -1,11 +1,12 @@
 <?php
 
-namespace Drupal\ikto_environment_indicator\EventSubscriber;
+namespace Drupal\ikto_environment_indicator\EventListener;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\ikto_environment_indicator\Entity\EnvironmentIndicator;
-use Drupal\ikto_environment_indicator\EnvironmentIndicatorActive;
+use Drupal\ikto_environment_indicator\Entity\EnvironmentIndicatorInterface;
+use Drupal\ikto_environment_indicator\EnvironmentInfoServiceInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -18,22 +19,22 @@ class GetEnvironmentSubscriber implements EventSubscriberInterface {
   protected $config;
 
   /**
-   * @var EntityTypeManagerInterface
+   * @var EntityStorageInterface
    */
-  protected $em;
+  protected $storage;
 
   /**
-   * @var EnvironmentIndicatorActive
+   * @var EnvironmentInfoServiceInterface
    */
   protected $ev;
 
   public function __construct(
     ConfigFactoryInterface $config,
     EntityTypeManagerInterface $em,
-    EnvironmentIndicatorActive $ev
+    EnvironmentInfoServiceInterface $ev
   ) {
     $this->config = $config;
-    $this->em = $em;
+    $this->storage = $em->getStorage('ikto_environment_indicator');
     $this->ev = $ev;
   }
 
@@ -43,25 +44,23 @@ class GetEnvironmentSubscriber implements EventSubscriberInterface {
       $env = $this->getEnvironmentIndicatorForHost($event->getRequest()->getHttpHost());
 
       /**
-       * @var EnvironmentIndicator $env
+       * @var EnvironmentIndicatorInterface $env
        */
       if ($env) {
-        $this->ev->setName($env->label());
-        $this->ev->setDescription($env->getDescription());
-        $this->ev->setFgColor($env->getFgColor());
-        $this->ev->setBgColor($env->getBgColor());
+        $this->ev->setEnvironment($env);
+        $this->ev->save();
       }
     }
   }
 
   protected function getEnvironmentIndicatorForHost($host) {
-    $envs = $this->em->getStorage('ikto_environment_indicator')->loadMultiple();
-    uasort($envs, array('Drupal\ikto_environment_indicator\Entity\EnvironmentIndicator', 'sort'));
+    $environments = $this->storage->loadMultiple();
+    uasort($environments, array('Drupal\ikto_environment_indicator\Entity\EnvironmentIndicator', 'sort'));
 
     $env = NULL;
-    foreach ($envs as $env) {
+    foreach ($environments as $env) {
       /**
-       * @var EnvironmentIndicator $env
+       * @var EnvironmentIndicatorInterface $env
        */
       $url = $env->getUrl();
       if (empty($url)) {

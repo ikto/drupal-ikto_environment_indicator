@@ -1,5 +1,5 @@
 administer ikto environment indicator settings:
-  title: 'Administer environment_indicator settings'
+  title: 'Administer environment indicator settings'
   description: 'Configure the environments and the colors to display.'
 
 access ikto environment indicator:
