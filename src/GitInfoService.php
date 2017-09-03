@@ -8,6 +8,7 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 class GitInfoService implements GitInfoServiceInterface {
 
   const CACHE_KEY_BASE_COMMAND_EXISTS = 'ikto_environment_indicator:command_exists:';
+  const CACHE_KEY_GIT_INFO = 'ikto_environment_indicator:git_info';
 
   /**
    * @var ConfigFactoryInterface
@@ -32,6 +33,11 @@ class GitInfoService implements GitInfoServiceInterface {
       return NULL;
     }
 
+    $cachedGitInfo = $this->cache->get(static::CACHE_KEY_GIT_INFO);
+    if ($cachedGitInfo && !empty($cachedGitInfo->data)) {
+      return $cachedGitInfo->data;
+    }
+
     $release = NULL;
     // Show the git branch, if it exists.
     if (
@@ -47,7 +53,11 @@ class GitInfoService implements GitInfoServiceInterface {
       $release = end($tag_branch_parts);
     }
 
-    return trim($release);
+    $release = trim($release);
+
+    $this->cache->set(static::CACHE_KEY_GIT_INFO, $release);
+
+    return $release;
   }
 
   /**
