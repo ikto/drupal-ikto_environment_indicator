@@ -1,14 +1,12 @@
 <?php
 
-require_once __DIR__ . '/ikto_environment_indicator.inc';
-
 /**
  * Implements hook_toolbar().
  */
 function ikto_environment_indicator_toolbar() {
 
-  if (!_ikto_environment_indicator_toolbar_intergration_is_enabled()) {
-    return array();
+  if (!in_array('toolbar', \Drupal::config('ikto_environment_indicator.settings')->get('toolbar_integration'))) {
+    return [];
   }
 
   /**
