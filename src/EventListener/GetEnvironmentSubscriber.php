@@ -6,7 +6,7 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\ikto_environment_indicator\Entity\EnvironmentIndicatorInterface;
-use Drupal\ikto_environment_indicator\EnvironmentInfoService;
+use Drupal\ikto_environment_indicator\EnvironmentInfoServiceInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -24,14 +24,14 @@ class GetEnvironmentSubscriber implements EventSubscriberInterface {
   protected $storage;
 
   /**
-   * @var EnvironmentInfoService
+   * @var EnvironmentInfoServiceInterface
    */
   protected $ev;
 
   public function __construct(
     ConfigFactoryInterface $config,
     EntityTypeManagerInterface $em,
-    EnvironmentInfoService $ev
+    EnvironmentInfoServiceInterface $ev
   ) {
     $this->config = $config;
     $this->storage = $em->getStorage('ikto_environment_indicator');
@@ -48,6 +48,7 @@ class GetEnvironmentSubscriber implements EventSubscriberInterface {
        */
       if ($env) {
         $this->ev->setEnvironment($env);
+        $this->ev->save();
       }
     }
   }
