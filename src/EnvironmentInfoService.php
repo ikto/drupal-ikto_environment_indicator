@@ -9,6 +9,7 @@ use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Site\Settings;
 use Drupal\ikto_environment_indicator\Entity\EnvironmentIndicatorInterface;
 
 class EnvironmentInfoService implements EnvironmentInfoServiceInterface {
@@ -95,6 +96,13 @@ class EnvironmentInfoService implements EnvironmentInfoServiceInterface {
       $this->fgColor      = $cachedEnvironment->data['fg_color'];
       $this->bgColor      = $cachedEnvironment->data['bg_color'];
       $this->isLoaded     = TRUE;
+    }
+    elseif ($forcedEnvironmentId = Settings::get('ikto_environment_indicator_force_environment')) {
+      /** @var EnvironmentIndicatorInterface $forcedEnvironment */
+      $forcedEnvironment = $this->storage->load($forcedEnvironmentId);
+      if ($forcedEnvironment) {
+        $this->setEnvironment($forcedEnvironment);
+      }
     }
   }
 
