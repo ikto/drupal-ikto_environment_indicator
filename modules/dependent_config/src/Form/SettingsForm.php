@@ -62,12 +62,12 @@ class SettingsForm extends ConfigFormBase {
       if ($base_dir[0] != '/') {
         $base_dir = \Drupal::root() . '/' . $base_dir;
       }
-        if (!is_dir($base_dir)) {
-          $form_state->setError(
-            $form['base_dir'],
-            $this->t('The directory @dirname does not exist', ['@dirname' => $base_dir])
-          );
-        }
+      if (!is_dir($base_dir)) {
+        $form_state->setError(
+          $form['base_dir'],
+          $this->t('The directory @dirname does not exist', ['@dirname' => $base_dir])
+        );
+      }
     }
 
     $config_list = explode("\n", $form_state->getValue('config_list'));
