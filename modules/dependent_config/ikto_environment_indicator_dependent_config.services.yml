@@ -1,0 +1,5 @@
+services:
+  ikto_environment_indicator_dependent_config.storage_manager:
+    class: Drupal\ikto_environment_indicator_dependent_config\StorageManager
+    arguments:
+      - '@config.factory'
