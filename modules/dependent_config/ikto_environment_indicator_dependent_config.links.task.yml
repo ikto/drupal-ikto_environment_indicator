@@ -1,0 +1,4 @@
+ikto_environment_indicator_dependent_config.settings.tab:
+  title: 'Dependent Config'
+  route_name: ikto_environment_indicator_dependent_config.settings
+  base_route: ikto_environment_indicator.settings

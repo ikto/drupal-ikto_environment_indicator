@@ -1,0 +1,8 @@
+name: IKTO Environment indicator: Dependent config
+type: module
+description: Allows to store environment-dependent part of config in separate directory.
+package: Development
+core: 8.x
+dependencies:
+  - ikto_environment_indicator
+  - config_filter

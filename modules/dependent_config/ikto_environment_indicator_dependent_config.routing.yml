@@ -1,0 +1,7 @@
+ikto_environment_indicator_dependent_config.settings:
+  path: '/admin/config/development/ikto-environment-indicator/dependent-config'
+  defaults:
+    _form: '\Drupal\ikto_environment_indicator_dependent_config\Form\SettingsForm'
+    _title: 'Environment Dependent Config Settings'
+  requirements:
+    _permission: 'administer ikto environment indicator settings'

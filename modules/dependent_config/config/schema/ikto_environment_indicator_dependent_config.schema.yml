@@ -1,0 +1,13 @@
+ikto_environment_indicator_dependent_config.settings:
+  type: config_object
+  label: 'Environment dependent configs settings'
+  mapping:
+    base_dir:
+      type: string
+      label: 'The base directory for storing environment dependent configs'
+    config_list:
+      type: sequence
+      label: 'The list of config names which should be considered as environment dependent'
+      sequence:
+        type: string
+        label: 'Config name'
