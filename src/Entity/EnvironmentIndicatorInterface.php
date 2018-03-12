@@ -2,12 +2,16 @@
 
 namespace Drupal\ikto_environment_indicator\Entity;
 
+/**
+ * Defines an interface of the environment indicator entity.
+ */
 interface EnvironmentIndicatorInterface {
 
   /**
    * Gets the machine name of the environment indicator.
    *
    * @return string
+   *   The machine name of the environment.
    */
   public function id();
 
@@ -15,6 +19,7 @@ interface EnvironmentIndicatorInterface {
    * Gets the human-readable name of the environment indicator.
    *
    * @return string
+   *   The name of the environment.
    */
   public function label();
 
@@ -22,6 +27,7 @@ interface EnvironmentIndicatorInterface {
    * Gets the description of the environment indicator.
    *
    * @return string
+   *   The description of the environment.
    */
   public function getDescription();
 
@@ -29,6 +35,7 @@ interface EnvironmentIndicatorInterface {
    * Gets the URL of the environment indicator.
    *
    * @return string
+   *   The URL of the environment.
    */
   public function getUrl();
 
@@ -36,6 +43,7 @@ interface EnvironmentIndicatorInterface {
    * Gets the foreground color.
    *
    * @return string
+   *   The foreground color of the environment (hex).
    */
   public function getFgColor();
 
@@ -43,13 +51,16 @@ interface EnvironmentIndicatorInterface {
    * Gets the background color.
    *
    * @return string
+   *   The background color of the environment (hex).
    */
   public function getBgColor();
 
   /**
    * Gets the weight.
    *
-   * @return integer
+   * @return int
+   *   The weight of the environment.
    */
   public function getWeight();
+
 }

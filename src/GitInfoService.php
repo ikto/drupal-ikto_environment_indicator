@@ -5,21 +5,36 @@ namespace Drupal\ikto_environment_indicator;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 
+/**
+ * Defines git info service.
+ */
 class GitInfoService implements GitInfoServiceInterface {
 
   const CACHE_KEY_BASE_COMMAND_EXISTS = 'ikto_environment_indicator:command_exists:';
   const CACHE_KEY_GIT_INFO = 'ikto_environment_indicator:git_info';
 
   /**
-   * @var ConfigFactoryInterface
+   * The config factory.
+   *
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
    */
   protected $configFactory;
 
   /**
-   * @var CacheBackendInterface
+   * The cache backend for git info.
+   *
+   * @var \Drupal\Core\Cache\CacheBackendInterface
    */
   protected $cache;
 
+  /**
+   * GitInfoService constructor.
+   *
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
+   *   The config factory.
+   * @param \Drupal\Core\Cache\CacheBackendInterface $cache
+   *   The cache backend for git info.
+   */
   public function __construct(ConfigFactoryInterface $configFactory, CacheBackendInterface $cache) {
     $this->configFactory = $configFactory;
     $this->cache = $cache;
@@ -44,8 +59,8 @@ class GitInfoService implements GitInfoServiceInterface {
       $this->isCommandExist('git')
       && $git_describe = $this->executeOsCommand('git describe --all')
     ) {
-      // Execute "git describe --all" and get the last part of heads/7.x-2.x as the
-      // tag/branch.
+      // Execute "git describe --all" and get the last part
+      // of heads/7.x-2.x as the tag/branch.
       if (empty($git_describe)) {
         return NULL;
       }
@@ -112,4 +127,5 @@ class GitInfoService implements GitInfoServiceInterface {
 
     return $stdout;
   }
+
 }

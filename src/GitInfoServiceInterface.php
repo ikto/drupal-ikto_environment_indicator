@@ -2,6 +2,9 @@
 
 namespace Drupal\ikto_environment_indicator;
 
+/**
+ * Defines an interface for git info service.
+ */
 interface GitInfoServiceInterface {
 
   /**
@@ -11,4 +14,5 @@ interface GitInfoServiceInterface {
    *   The git branch or tag.
    */
   public function getGitInfo();
+
 }

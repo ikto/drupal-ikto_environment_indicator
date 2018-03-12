@@ -4,15 +4,17 @@ namespace Drupal\ikto_environment_indicator\Form;
 
 use Drupal\Core\Entity\EntityForm as EntityFormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\ikto_environment_indicator\Entity\EnvironmentIndicatorInterface;
 
+/**
+ * Defines a form for the environment indicator entity.
+ */
 class EnvironmentIndicatorForm extends EntityFormBase {
 
   /**
-   * This actually builds your form.
+   * {@inheritdoc}
    */
   public function form(array $form, FormStateInterface $form_state) {
-    /* @var EnvironmentIndicatorInterface $environment_switcher */
+    /* @var \Drupal\ikto_environment_indicator\Entity\EnvironmentIndicatorInterface $environment_switcher */
     $environment_switcher = $this->getEntity();
 
     $form['name'] = [
@@ -63,10 +65,7 @@ class EnvironmentIndicatorForm extends EntityFormBase {
   }
 
   /**
-   * Save your config entity.
-   *
-   * There will eventually be default code to rely on here, but it doesn't exist
-   * yet.
+   * {@inheritdoc}
    */
   public function save(array $form, FormStateInterface $form_state) {
     $environment = $this->getEntity();

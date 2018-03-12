@@ -6,12 +6,14 @@ use Drupal\Core\Access\AccessResultAllowed;
 use Drupal\Core\Access\AccessResultForbidden;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Cache\CacheBackendInterface;
-use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Site\Settings;
 use Drupal\ikto_environment_indicator\Entity\EnvironmentIndicatorInterface;
 
+/**
+ * Defines environment indicator service.
+ */
 class EnvironmentInfoService implements EnvironmentInfoServiceInterface {
 
   const CACHE_KEY = 'ikto_environment_indicator:active_environment';
@@ -54,25 +56,44 @@ class EnvironmentInfoService implements EnvironmentInfoServiceInterface {
   /**
    * The flag which indicates whether active indicator was loaded or not.
    *
-   * @var boolean
+   * @var bool
    */
   protected $isLoaded = FALSE;
 
   /**
-   * @var CacheBackendInterface
+   * The cache backend for environment indicator.
+   *
+   * @var \Drupal\Core\Cache\CacheBackendInterface
    */
   protected $cache;
 
   /**
-   * @var GitInfoServiceInterface
+   * Git info provider service.
+   *
+   * @var \Drupal\ikto_environment_indicator\GitInfoServiceInterface
    */
   protected $gitInfo;
 
   /**
-   * @var EntityStorageInterface
+   * Environment indicator storage.
+   *
+   * @var \Drupal\Core\Entity\EntityStorageInterface
    */
   protected $storage;
 
+  /**
+   * EnvironmentInfoService constructor.
+   *
+   * @param \Drupal\Core\Cache\CacheBackendInterface $cache
+   *   The cache backend for environment indicator.
+   * @param \Drupal\ikto_environment_indicator\GitInfoServiceInterface $gitInfo
+   *   The git info provider service.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
+   *   The entity type manager.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   *   If ikto_environment_indicator entity is missing.
+   */
   public function __construct(
     CacheBackendInterface $cache,
     GitInfoServiceInterface $gitInfo,
@@ -90,15 +111,15 @@ class EnvironmentInfoService implements EnvironmentInfoServiceInterface {
     $cachedEnvironment = $this->cache->get(self::CACHE_KEY);
 
     if ($cachedEnvironment && !empty($cachedEnvironment->data)) {
-      $this->machineName  = $cachedEnvironment->data['machine_name'];
-      $this->displayName  = $cachedEnvironment->data['display_name'];
-      $this->description  = $cachedEnvironment->data['description'];
-      $this->fgColor      = $cachedEnvironment->data['fg_color'];
-      $this->bgColor      = $cachedEnvironment->data['bg_color'];
-      $this->isLoaded     = TRUE;
+      $this->machineName = $cachedEnvironment->data['machine_name'];
+      $this->displayName = $cachedEnvironment->data['display_name'];
+      $this->description = $cachedEnvironment->data['description'];
+      $this->fgColor = $cachedEnvironment->data['fg_color'];
+      $this->bgColor = $cachedEnvironment->data['bg_color'];
+      $this->isLoaded = TRUE;
     }
     elseif ($forcedEnvironmentId = Settings::get('ikto_environment_indicator_force_environment')) {
-      /** @var EnvironmentIndicatorInterface $forcedEnvironment */
+      /** @var \Drupal\ikto_environment_indicator\Entity\EnvironmentIndicatorInterface $forcedEnvironment */
       $forcedEnvironment = $this->storage->load($forcedEnvironmentId);
       if ($forcedEnvironment) {
         $this->setEnvironment($forcedEnvironment);
@@ -186,12 +207,12 @@ class EnvironmentInfoService implements EnvironmentInfoServiceInterface {
    * {@inheritdoc}
    */
   public function setEnvironment(EnvironmentIndicatorInterface $env) {
-    $this->machineName  = $env->id();
-    $this->displayName  = $env->label();
-    $this->description  = $env->getDescription();
-    $this->fgColor      = $env->getFgColor();
-    $this->bgColor      = $env->getBgColor();
-    $this->isLoaded     = TRUE;
+    $this->machineName = $env->id();
+    $this->displayName = $env->label();
+    $this->description = $env->getDescription();
+    $this->fgColor = $env->getFgColor();
+    $this->bgColor = $env->getBgColor();
+    $this->isLoaded = TRUE;
   }
 
   /**
@@ -238,7 +259,7 @@ class EnvironmentInfoService implements EnvironmentInfoServiceInterface {
     $access = $account->hasPermission('access ikto environment indicator');
 
     if (!$access) {
-      $access= $account->hasPermission('access ikto environment indicator ' . $this->getMachineName());
+      $access = $account->hasPermission('access ikto environment indicator ' . $this->getMachineName());
     }
 
     if ($return_as_object) {
@@ -252,4 +273,5 @@ class EnvironmentInfoService implements EnvironmentInfoServiceInterface {
 
     return $access;
   }
+
 }

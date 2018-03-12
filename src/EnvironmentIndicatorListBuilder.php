@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\ikto_environment_indicator\EnvironmentIndicatorListBuilder.
- */
-
 namespace Drupal\ikto_environment_indicator;
 
 use Drupal\Core\Config\Entity\ConfigEntityListBuilder;
@@ -18,7 +13,7 @@ class EnvironmentIndicatorListBuilder extends ConfigEntityListBuilder {
   /**
    * {@inheritdoc}
    */
-  public function getFormID() {
+  public function getFormId() {
     return 'ikto_environment_indicator_overview_environments';
   }
 
