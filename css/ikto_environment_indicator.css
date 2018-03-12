@@ -1,3 +1,6 @@
+.toolbar-bar .toolbar-icon-environment {
+  display: block;
+}
 .toolbar-bar .toolbar-icon-environment:before {
   background-image: url("../images/env-bebebe.svg");
 }
