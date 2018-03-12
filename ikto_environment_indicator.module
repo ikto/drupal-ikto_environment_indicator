@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @file
+ * Hook implementations.
+ */
+
+/**
  * Implements hook_toolbar().
  */
 function ikto_environment_indicator_toolbar() {
@@ -9,9 +14,7 @@ function ikto_environment_indicator_toolbar() {
     return [];
   }
 
-  /**
-   * @var \Drupal\ikto_environment_indicator\EnvironmentInfoServiceInterface $activeEnvironment
-   */
+  /** @var \Drupal\ikto_environment_indicator\EnvironmentInfoServiceInterface $activeEnvironment */
   $activeEnvironment = \Drupal::service('ikto_environment_indicator.active_environment_info');
 
   $access = $activeEnvironment->access('view', \Drupal::currentUser());

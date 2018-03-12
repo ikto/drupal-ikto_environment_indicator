@@ -1,31 +1,44 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\environment_indicator\EnvironmentIndicatorPermissions.
- */
-
 namespace Drupal\ikto_environment_indicator;
 
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
-use Drupal\Core\Entity\EntityStorageInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+/**
+ * Defines dynamic permissions provider for environment indicator.
+ *
+ * @package Drupal\ikto_environment_indicator
+ */
 class EnvironmentIndicatorPermissions implements ContainerInjectionInterface {
 
-  /** @var EntityStorageInterface */
+  /**
+   * Environment indicator storage.
+   *
+   * @var \Drupal\Core\Entity\EntityStorageInterface
+   */
   protected $storage;
 
-  public function __construct(EntityStorageInterface $storage) {
-    $this->storage = $storage;
+  /**
+   * EnvironmentIndicatorPermissions constructor.
+   *
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   The entity type manager.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   *   If ikto_environment_indicator entity is missing.
+   */
+  public function __construct(EntityTypeManagerInterface $entity_type_manager) {
+    $this->storage = $entity_type_manager->getStorage('ikto_environment_indicator');
   }
 
   /**
-   * {@inheridoc}
+   * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('entity_type.manager')->getStorage('ikto_environment_indicator')
+      $container->get('entity_type.manager')
     );
   }
 
@@ -47,4 +60,5 @@ class EnvironmentIndicatorPermissions implements ContainerInjectionInterface {
 
     return $permissions;
   }
+
 }

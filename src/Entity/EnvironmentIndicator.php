@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\ikto_environment_indicator\Entity\EnvironmentIndicator.
- */
-
 namespace Drupal\ikto_environment_indicator\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBase;
@@ -90,10 +85,9 @@ class EnvironmentIndicator extends ConfigEntityBase implements EnvironmentIndica
   /**
    * The weight of the indicator.
    *
-   * @var integer
+   * @var int
    */
   public $weight;
-
 
   /**
    * {@inheritdoc}
@@ -148,6 +142,7 @@ class EnvironmentIndicator extends ConfigEntityBase implements EnvironmentIndica
    * Gets the machine name.
    *
    * @param string $machine
+   *   The machine name of the environment.
    */
   public function setMachine($machine) {
     $this->set('machine', $machine);
@@ -157,6 +152,7 @@ class EnvironmentIndicator extends ConfigEntityBase implements EnvironmentIndica
    * Sets the name.
    *
    * @param string $name
+   *   The name of the environment.
    */
   public function setName($name) {
     $this->set('name', $name);
@@ -166,14 +162,17 @@ class EnvironmentIndicator extends ConfigEntityBase implements EnvironmentIndica
    * Sets the description for the configurable.
    *
    * @param string $description
+   *   The description of the environment.
    */
   public function setDescription($description) {
     $this->description = $description;
   }
+
   /**
    * Sets the URL.
    *
    * @param string $url
+   *   The URL of the environment.
    */
   public function setUrl($url) {
     $this->set('url', $url);
@@ -183,6 +182,7 @@ class EnvironmentIndicator extends ConfigEntityBase implements EnvironmentIndica
    * Sets the foreground color.
    *
    * @param string $fg_color
+   *   The foreground color of the environment (hex).
    */
   public function setFgColor($fg_color) {
     $this->set('fg_color', $fg_color);
@@ -192,6 +192,7 @@ class EnvironmentIndicator extends ConfigEntityBase implements EnvironmentIndica
    * Sets the background color.
    *
    * @param string $bg_color
+   *   The background color of the environment (hex).
    */
   public function setBgColor($bg_color) {
     $this->set('bg_color', $bg_color);
@@ -200,7 +201,8 @@ class EnvironmentIndicator extends ConfigEntityBase implements EnvironmentIndica
   /**
    * Sets the weight.
    *
-   * @param integer $weight
+   * @param int $weight
+   *   The weight of the environment.
    */
   public function setWeight($weight) {
     $this->set('weight', $weight);

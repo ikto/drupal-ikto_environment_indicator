@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\ikto_environment_indicator\EnvironmentIndicatorAccessControlHandler.
- */
-
 namespace Drupal\ikto_environment_indicator;
 
 use Drupal\Core\Access\AccessResult;

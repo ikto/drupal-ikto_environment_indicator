@@ -1,22 +1,20 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\ikto_environment_indicator\Form\EnvironmentIndicatorSettingsForm.
- */
-
 namespace Drupal\ikto_environment_indicator\Form;
 
 use Drupal\Core\Form\FormInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 
+/**
+ * Defines settings form for the environment indicator module.
+ */
 class SettingsForm extends ConfigFormBase implements FormInterface {
 
   /**
    * {@inheritdoc}
    */
-  public function getFormID() {
+  public function getFormId() {
     return 'ikto_environment_indicator_settings_form';
   }
 
