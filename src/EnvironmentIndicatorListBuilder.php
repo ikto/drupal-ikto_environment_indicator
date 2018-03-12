@@ -4,6 +4,7 @@ namespace Drupal\ikto_environment_indicator;
 
 use Drupal\Core\Config\Entity\ConfigEntityListBuilder;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Url;
 
 /**
  * Provides a listing of environments.
@@ -65,7 +66,7 @@ class EnvironmentIndicatorListBuilder extends ConfigEntityListBuilder {
       unset($this->weightKey);
     }
     $build = parent::render();
-    $build['table']['#empty'] = $this->t('No environment switchers available. <a href=":link">Add environment</a>.', [':link' => \Drupal::url('entity.ikto_environment_indicator.add')]);
+    $build['table']['#empty'] = $this->t('No environment switchers available. <a href=":link">Add environment</a>.', [':link' => Url::fromRoute('entity.ikto_environment_indicator.add')->toString()]);
 
     return $build;
   }

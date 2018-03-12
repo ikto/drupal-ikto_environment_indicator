@@ -70,7 +70,7 @@ class EnvironmentIndicatorForm extends EntityFormBase {
   public function save(array $form, FormStateInterface $form_state) {
     $environment = $this->getEntity();
     $environment->save();
-    drupal_set_message(t('Saved the %label environment.', [
+    \Drupal::messenger()->addMessage($this->t('Saved the %label environment.', [
       '%label' => $environment->label(),
     ]));
 
