@@ -167,9 +167,12 @@ class EnvironmentInfoService implements EnvironmentInfoServiceInterface {
   public function getDisplayNameFull() {
     $displayNameFull = $this->displayName;
 
-    $gitInfo = $this->gitInfo->getGitInfo();
-    if ($gitInfo) {
-      $displayNameFull .= ' (' . $gitInfo . ')';
+    $buildInfo = Settings::get('ikto_environment_indicator_force_build_info');
+    if (!$buildInfo) {
+      $buildInfo = $this->gitInfo->getGitInfo();
+    }
+    if ($buildInfo) {
+      $displayNameFull .= ' (' . $buildInfo . ')';
     }
 
     return $displayNameFull;
