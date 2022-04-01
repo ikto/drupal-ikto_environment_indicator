@@ -30,6 +30,15 @@ use Drupal\Core\Annotation\Translation;
  *     "label" = "human_name",
  *     "weight" = "weight"
  *   },
+ *   config_export = {
+ *     "machine",
+ *     "description",
+ *     "name",
+ *     "url",
+ *     "fg_color",
+ *     "bg_color",
+ *     "weight",
+ *   },
  *   links = {
  *     "edit-form" = "/admin/config/development/ikto-environment-indicator/manage/{ikto_environment_indicator}",
  *     "edit-permissions-form" = "/admin/people/permissions/{user_role}",
