@@ -6,7 +6,7 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\ikto_environment_indicator\EnvironmentInfoServiceInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -61,10 +61,10 @@ class GetEnvironmentSubscriber implements EventSubscriberInterface {
   /**
    * Gets the current environment info from current request.
    *
-   * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
+   * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
    *   The kernel request event instance.
    */
-  public function onKernelRequestEnvironment(GetResponseEvent $event) {
+  public function onKernelRequestEnvironment(RequestEvent $event) {
 
     if (!$this->ev->getIsLoaded()) {
       $env = $this->getEnvironmentIndicatorForHost($event->getRequest()->getHttpHost());
